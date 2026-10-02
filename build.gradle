@@ -138,6 +138,8 @@ gitPublish {
     contents {
         from 'build/reports'
     }
+    
+    commitMessage = "Updating webpages at ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
 }
 
 gitPublishCopy.dependsOn reports
