@@ -2,11 +2,23 @@ plugins {
    id 'java'
    id 'application'
    id 'org.ajoberstar.git-publish' version '4.2.0'
+   id "com.github.spotbugs" version "6.5.12"
 }
 
 repositories {
     mavenCentral()
 }
+
+spotbugsMain {
+    ignoreFailures = true
+    effort = 'max'
+    reportLevel = 'medium'
+    reports {
+       xml.enabled = false
+       html.enabled = true
+    }
+}
+spotbugsTest.enabled = false
 
 test {
     ignoreFailures = true
