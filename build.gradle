@@ -143,7 +143,7 @@ task deployReports (type: Exec, dependsOn: ['cleanWorkTree']) {
 
 //gitPublishCopy.dependsOn site
 gitPublish {
-    repoUri = 'https://github.com/ODU-CS351-F26/CS351--ciAsst--asham007.git'
+    repoUri = 'git@github.com:ODU-CS351-F26/CS351--ciAsst--asham007.git'
     
     branch = 'gh-pages'
     
@@ -151,12 +151,12 @@ gitPublish {
         from 'build/reports'
     }
 
-    
+    /*
     credentials {
         username = System.getenv('GITHUB_ACTOR') ?: 'asham007'
         password = System.getenv("GITHUB_TOKEN")
     }
-    
+    */
 
     commitMessage = "Updating webpages at ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
 }
