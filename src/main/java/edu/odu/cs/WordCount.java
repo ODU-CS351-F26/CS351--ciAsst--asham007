@@ -16,4 +16,9 @@ public class WordCount {
         WordCount wc = (WordCount)obj;
         return count == wc.count && word.equals(wc.word);
     }
+
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 69; // nice
+    }
 }
