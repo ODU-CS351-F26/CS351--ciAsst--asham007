@@ -29,7 +29,7 @@ public class MostCommonWords implements Iterable<WordCount> {
             }
             
         } catch (IOException ex) {
-            // Ignore
+            // Ignore... also hi
         }
     }
 
