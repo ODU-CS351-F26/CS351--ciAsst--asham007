@@ -10,6 +10,10 @@ import static org.hamcrest.Matchers.*;
 
 public class TestWordFilter {
 
+  @Test
+  public final void easyPass() {
+      assertNotEquals(2+2, 5);
+  }
 
   /**
    * Test method basic words

@@ -24,7 +24,7 @@ test {
     ignoreFailures = true
 }
 
-task reports (type: Copy, dependsOn: ['build', 'javadoc', 'check']) {
+task reports (type: Copy, dependsOn: ['check', 'javadoc']) {
     from 'src/main/html'
     from 'build/docs'
     into 'build/reports'
