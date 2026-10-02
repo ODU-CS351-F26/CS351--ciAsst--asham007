@@ -6,8 +6,6 @@ on:
 
 jobs:
 
-
-
   build:
 
     runs-on: ubuntu-latest
@@ -24,6 +22,10 @@ jobs:
         distribution: 'adopt'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - name: Configure Git credentials
+      run: git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and test
       run: ./gradlew deployReports
       env:

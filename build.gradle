@@ -139,11 +139,12 @@ gitPublish {
         from 'build/reports'
     }
 
+    /*
     credentials {
         username = "deploy-token"
         password = System.getenv("GITHUB_TOKEN")
     }
-
+    */
 
     commitMessage = "Updating webpages at ${new Date().format('yyyy-MM-dd HH:mm:ss')}"
 }
