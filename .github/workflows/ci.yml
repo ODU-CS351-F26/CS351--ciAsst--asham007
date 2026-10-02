@@ -5,6 +5,10 @@ on:
     branches: [ main ]
 
 jobs:
+
+  permissions:
+    contents: write
+
   build:                           
 
     runs-on: ubuntu-latest         
@@ -20,3 +24,5 @@ jobs:
       run: chmod +x gradlew              
     - name: Build and test
       run: ./gradlew deployReports
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
