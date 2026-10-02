@@ -8,6 +8,143 @@ repositories {
     mavenCentral()
 }
 
+task reports (type: Copy, dependsOn: ['build', 'javadoc']) {
+    from 'src/main/html'
+    from 'build/docs'
+    into 'build/reports'
+}
+
+/*
+def websiteRepo='git@github.com:asham007/exercise_documentation_site_asham007.git'
+
+task clearPages(type: Delete) {
+    delete 'build/gh-pages'
+}
+
+task clonePages(type: Exec, dependsOn: ['clearPages']) {
+    workingDir = '.'
+    commandLine = ['git', 'clone', websiteRepo, 'build/gh-pages']
+}
+
+task copyWebsite (type: Copy, dependsOn: ['reports', 'clonePages']) {
+    from 'build/reports'
+    into 'build/gh-pages'
+}
+
+def pagesDir = "$buildDir/gh-pages"
+
+task updateWebsite (type: Exec, dependsOn: ['copyWebsite']) {
+    workingDir = 'build/gh-pages'
+    commandLine = ['git', 'add', '-f', '.']
+}
+
+task commitWebsite (type: Exec, dependsOn: ['updateWebsite']) {
+    workingDir = 'build/gh-pages'
+    commandLine = ['git', 'commit', '-m', 'Updating-webpages']
+}
+
+task deployReports(type: Exec, dependsOn: 'commitWebsite') {
+    group = "Reporting"
+    description = 'Copies reports to the website repo and pushes to Github'
+    workingDir = 'build/gh-pages'
+    commandLine = ['git', 'push', '--force']
+}
+*/
+
+/*
+//1. Check out a copy of the gh-pages branch into a separate working tree location.
+def pagesDir = file("${project.rootDir}/build/website-temp").absolutePath
+
+task clearPages(type: Delete) {
+    delete pagesDir
+}
+
+task workTreeAdd(type: Exec, dependsOn: ['clearPages']) { 
+    workingDir = '.'
+    commandLine = ['git', 'worktree', 'add', '-f', pagesDir, 'gh-pages']
+}
+
+task workTreeCheckout(type: Exec, dependsOn: ['workTreeAdd']) { 
+    workingDir = pagesDir
+    commandLine = ['git', 'checkout', 'gh-pages']
+}
+
+task workTree(type: Exec, dependsOn: ['workTreeCheckout']) { 
+    workingDir = pagesDir
+    commandLine = ['git', 'pull']
+}
+
+//2. Copy all files making up my website into the new working tree.
+task copyReports (type: Copy, dependsOn: ['reports', 'workTree']) {
+    from 'build/reports'
+    into pagesDir
+}
+
+task copyReadMe (type: Copy, dependsOn: ['workTree']) {
+    from '../README.md'
+    into pagesDir
+}
+
+task copyWebsite (type: Copy, dependsOn: ['copyReports', 'copyReadMe']) {
+    from file('src/main/html')
+    into pagesDir
+}
+
+//3. Commit those changes to the gh-pages branch.
+task stageWebsite (type: Exec, dependsOn: 'copyWebsite') {
+    workingDir = pagesDir
+    commandLine = ['git', 'add', '-f', pagesDir]
+    ignoreExitValue = true
+}
+
+task commitWebsite (type: Exec, dependsOn: 'stageWebsite') {
+    Date now = new Date()
+
+    workingDir = pagesDir
+    commandLine = ['git', 'commit', '-m', 'Updating webpages at ' + now.toString()]
+    ignoreExitValue = true
+}
+
+//4. Push the changes to the gh-pages branch.
+task pushWebsite (type: Exec, dependsOn: 'commitWebsite') {
+    workingDir = pagesDir
+    commandLine = ['git', 'push', '--force']
+    ignoreExitValue = true
+}
+
+//5. Clean up
+task cleanWorkTree (type: Delete, dependsOn: 'pushWebsite') {
+    delete pagesDir
+}
+
+task deployReports (type: Exec, dependsOn: ['cleanWorkTree']) {
+    group = "Reporting"
+    description = 'Commit and push website changes to GitHub'
+    workingDir = '.'
+    commandLine = ['git', 'worktree', 'prune']
+}
+*/
+
+//gitPublishCopy.dependsOn site
+gitPublish {
+    repoUri = 'git@github.com:ODU-CS351-F26/CS351--ciAsst--asham007.git'
+    
+    branch = 'gh-pages'
+    
+    contents {
+        from 'build/reports'
+    }
+}
+
+gitPublishCopy.dependsOn reports
+tasks.register("deployReports") {
+    dependsOn(
+        "gitPublishReset",
+        "gitPublishCopy",
+        "gitPublishCommit",
+        "gitPublishPush"
+    )
+}
 
 java {
     sourceCompatibility = JavaVersion.toVersion(17)
@@ -16,6 +153,7 @@ java {
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.hamcrest:hamcrest-library:2.2'
 }
 
@@ -30,4 +168,3 @@ tasks.withType(Test) {
 application { //Allows  ./gradlew run --args=path-to-test-data
     mainClass = 'edu.odu.cs.MostCommonWords'
 }
-
