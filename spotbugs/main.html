@@ -85,7 +85,7 @@
          <br/>
       </p>
       <h2>Metrics</h2>
-      <p>157 lines of code analyzed,
+      <p>163 lines of code analyzed,
 	in 5 classes, 
 	in 1 packages.</p>
       <table width="500" cellpadding="5" cellspacing="2">
@@ -96,8 +96,8 @@
          </tr>
          <tr class="tablerow0">
             <td>High Priority Warnings</td>
-            <td align="right">2</td>
-            <td align="right">12.74</td>
+            <td align="right">1</td>
+            <td align="right">6.13</td>
          </tr>
          <tr class="tablerow1">
             <td>Medium Priority Warnings</td>
@@ -109,10 +109,10 @@
                <b>Total Warnings</b>
             </td>
             <td align="right">
-               <b>2</b>
+               <b>1</b>
             </td>
             <td align="right">
-               <b>12.74</b>
+               <b>6.13</b>
             </td>
          </tr>
       </table>
@@ -125,9 +125,6 @@
       </p>
       <h2>Contents</h2>
       <ul>
-         <li>
-            <a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
-         </li>
          <li>
             <a href="#Warnings_I18N">Internationalization Warnings</a>
          </li>
@@ -143,50 +140,21 @@
          </tr>
          <tr class="tablerow0">
             <td>
-               <a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+               <a href="#Warnings_I18N">Internationalization Warnings</a>
             </td>
             <td align="right">1</td>
          </tr>
          <tr class="tablerow1">
             <td>
-               <a href="#Warnings_I18N">Internationalization Warnings</a>
-            </td>
-            <td align="right">1</td>
-         </tr>
-         <tr class="tablerow0">
-            <td>
                <b>Total</b>
             </td>
             <td align="right">
-               <b>2</b>
+               <b>1</b>
             </td>
          </tr>
       </table>
       <h1>Warnings</h1>
       <p>Click on a warning row to see full context information.</p>
-      <h2>
-         <a name="Warnings_BAD_PRACTICE">Bad practice Warnings</a>
-      </h2>
-      <table class="warningtable" width="100%" cellspacing="0">
-         <tr class="tableheader">
-            <th align="left">Code</th>
-            <th align="left">Warning</th>
-         </tr>
-         <tr class="tablerow1" onclick="toggleRow('d1e25');">
-            <td>
-               <span class="priority-1">HE</span>
-            </td>
-            <td>edu.odu.cs.WordCount defines equals and uses Object.hashCode()</td>
-         </tr>
-         <tr class="detailrow1">
-            <td/>
-            <td>
-               <p id="d1e25" style="display: none;">
-                  <a href="#HE_EQUALS_USE_HASHCODE">Bug type HE_EQUALS_USE_HASHCODE (click for details)</a>
-                  <br/>In class edu.odu.cs.WordCount<br/>In method edu.odu.cs.WordCount.equals(Object)<br/>At WordCount.java:[lines 13-17]</p>
-            </td>
-         </tr>
-      </table>
       <h2>
          <a name="Warnings_I18N">Internationalization Warnings</a>
       </h2>
@@ -224,26 +192,5 @@ object explicitly.</p>
 <p>See <a href="https://cwe.mitre.org/data/definitions/173.html">CWE-173: Improper Handling of Alternate Encoding</a>.
 </p>
 
-      <h2>
-         <a name="HE_EQUALS_USE_HASHCODE">HE_EQUALS_USE_HASHCODE: Class defines equals() and uses Object.hashCode()</a>
-      </h2>
-
-  <p> This class overrides <code>equals(Object)</code>, but does not
-  override <code>hashCode()</code>, and inherits the implementation of
-  <code>hashCode()</code> from <code>java.lang.Object</code> (which returns
-  the identity hash code, an arbitrary value assigned to the object
-  by the VM).&nbsp; Therefore, the class is very likely to violate the
-  invariant that equal objects must have equal hashcodes.</p>
-
-<p>If you don't think instances of this class will ever be inserted into a HashMap/HashTable,
-the recommended <code>hashCode</code> implementation to use is:</p>
-<pre><code>public int hashCode() {
-    assert false : "hashCode not designed";
-    return 42; // any arbitrary constant will do
-}
-</code></pre>
-  <p>See <a href="https://cwe.mitre.org/data/definitions/581.html">CWE-581: Object Model Violation: Just One of Equals and Hashcode Defined</a>.
-</p>
-
-    </body>
+      </body>
 </html>
